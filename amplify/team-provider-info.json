@@ -1,0 +1,26 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-ngodonormanagement-dev-142722-authRole",
+      "UnauthRoleArn": "arn:aws:iam::415731500432:role/amplify-ngodonormanagement-dev-142722-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::415731500432:role/amplify-ngodonormanagement-dev-142722-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-ngodonormanagement-dev-142722-deployment",
+      "UnauthRoleName": "amplify-ngodonormanagement-dev-142722-unauthRole",
+      "StackName": "amplify-ngodonormanagement-dev-142722",
+      "StackId": "arn:aws:cloudformation:us-east-1:415731500432:stack/amplify-ngodonormanagement-dev-142722/147cd8e0-f9e7-11eb-b7aa-0a13a71c396d",
+      "AmplifyAppId": "d1p2l1yc6omurc"
+    },
+    "categories": {
+      "auth": {
+        "ngodonormanagementb1f4f471": {}
+      },
+      "function": {
+        "ngodonormanagement18666908": {
+          "deploymentBucketName": "amplify-ngodonormanagement-dev-142722-deployment",
+          "s3Key": "amplify-builds/ngodonormanagement18666908-434d65586961366c5050-build.zip"
+        }
+      }
+    }
+  }
+}
