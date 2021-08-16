@@ -6,7 +6,6 @@ import Amplify from 'aws-amplify';
 import { AmplifyAuthenticator, AmplifySignIn } from '@aws-amplify/ui-react';
 
 import awsconfig from './aws-exports';
-console.log(JSON.stringify(awsconfig));
 Amplify.configure(awsconfig);
 
 
