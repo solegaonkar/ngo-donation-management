@@ -38,29 +38,29 @@ class SideBar extends React.Component {
       </a>
    </div>
    <div className="sidebar-wrapper">
-        <div class="user">
-          <div class="photo">
+        <div className="user">
+          <div className="photo">
             <img src="/assets/img/faces/avatar.jpg" alt=""/>
           </div>
-          <div class="user-info">
-            <a data-toggle="collapse" href="#collapseExample" class="username">
+          <div className="user-info">
+            <a data-toggle="collapse" href="#collapseExample" className="username">
               <span>
                 Vikas Solegaonkar
-                <b class="caret"></b>
+                <b className="caret"></b>
               </span>
             </a>
-            <div class="collapse" id="collapseExample">
-              <ul class="nav">
-                <li class="nav-item">
-                  <a class="nav-link" >
-                    <span class="sidebar-mini">  </span>
-                    <span class="sidebar-normal"> My Profile </span>
+            <div className="collapse" id="collapseExample">
+              <ul className="nav">
+                <li className="nav-item">
+                  <a className="nav-link" >
+                    <span className="sidebar-mini">  </span>
+                    <span className="sidebar-normal"> My Profile </span>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" >
-                    <span class="sidebar-mini"> </span>
-                    <span class="sidebar-normal"> Settings </span>
+                <li className="nav-item">
+                  <a className="nav-link" >
+                    <span className="sidebar-mini"> </span>
+                    <span className="sidebar-normal"> Settings </span>
                   </a>
                 </li>
               </ul>

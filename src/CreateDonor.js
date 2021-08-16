@@ -74,21 +74,21 @@ class CreateDonor extends React.Component {
                         
                       <div className="row">
                         <div className="col-sm-6 p-4 center">
-                          <div class="form-check">
-                            <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" value="" /> VIP - Corporate
-                              <span class="form-check-sign">
-                                <span class="check"></span>
+                          <div className="form-check">
+                            <label className="form-check-label">
+                              <input className="form-check-input" type="checkbox" value="" /> VIP - Corporate
+                              <span className="form-check-sign">
+                                <span className="check"></span>
                               </span>
                             </label>
                           </div>
                         </div>
                         <div className="col-sm-6 p-4 center">
-                          <div class="form-check">
-                            <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" value="" /> VIP - Political
-                              <span class="form-check-sign">
-                                <span class="check"></span>
+                          <div className="form-check">
+                            <label className="form-check-label">
+                              <input className="form-check-input" type="checkbox" value="" /> VIP - Political
+                              <span className="form-check-sign">
+                                <span className="check"></span>
                               </span>
                             </label>
                           </div>
