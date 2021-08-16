@@ -22,11 +22,8 @@ class App extends React.Component {
         return (
         <AmplifyAuthenticator>
           <AmplifySignIn slot="sign-in" hideSignUp></AmplifySignIn>
-
           <Main />
         </AmplifyAuthenticator>
-
-
         );
     }
     
