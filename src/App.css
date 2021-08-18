@@ -6,10 +6,37 @@ a {
     cursor: pointer;
 }
 
+.right {
+    text-align: right;
+}
+
 .center {
     text-align: center;
 }
 
 .clear-top {
     padding-top: 5rem;
+}
+
+div {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+h5 {
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    padding-top: 1em;
+    text-decoration: underline;
+}
+
+.simple-border {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ddd;
+    shadow: 
+}
+
+.link-button {
+    background-color: transparent;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }

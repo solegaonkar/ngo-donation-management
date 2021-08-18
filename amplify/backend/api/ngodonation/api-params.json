@@ -1,38 +1,40 @@
 {
-  "paths": [
-    {
-      "name": "/",
-      "lambdaFunction": "ngodonormanagement18666908",
-      "privacy": {
-        "private": true,
-        "auth": [
-          "/POST"
-        ]
-      },
-      "policyResourceName": "/"
-    }
-  ],
-  "resourceName": "ngodonation",
-  "apiName": "ngodonation",
-  "functionArns": [
-    {
-      "lambdaFunction": "ngodonormanagement18666908"
-    }
-  ],
-  "privacy": {
-    "auth": 1,
-    "unauth": 0,
-    "authRoleName": "amplify-ngodonormanagement-dev-142722-authRole",
-    "unAuthRoleName": "amplify-ngodonormanagement-dev-142722-unauthRole"
-  },
-  "dependsOn": [
-    {
-      "category": "function",
-      "resourceName": "ngodonormanagement18666908",
-      "attributes": [
-        "Name",
-        "Arn"
-      ]
-    }
-  ]
+    "paths": [
+        {
+            "name": "/",
+            "lambdaFunction": "ngodonormanagement18666908",
+            "privacy": {
+                "private": true,
+                "auth": [
+                    "/PUT",
+                    "/PATCH"
+                ]
+            },
+            "policyResourceName": "/"
+        }
+    ],
+    "resourceName": "ngodonation",
+    "apiName": "ngodonation",
+    "functionArns": [
+        {
+            "lambdaFunction": "ngodonormanagement18666908"
+        }
+    ],
+    "privacy": {
+        "auth": 1,
+        "unauth": 0,
+        "authRoleName": "amplify-ngodonormanagement-dev-142722-authRole",
+        "unAuthRoleName": "amplify-ngodonormanagement-dev-142722-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "ngodonormanagement18666908",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ],
+    "uuid": "794f6696"
 }

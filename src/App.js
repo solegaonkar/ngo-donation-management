@@ -9,24 +9,13 @@ import awsconfig from './aws-exports';
 Amplify.configure(awsconfig);
 
 
-class App extends React.Component {
-    
-    
-    constructor(props) {
-        super(props);
-    }
-
+function App(){
     // handler recieves the `e` event object
-    render() {
-        return (
+    return (
         <AmplifyAuthenticator>
           <AmplifySignIn slot="sign-in" hideSignUp></AmplifySignIn>
           <Main />
         </AmplifyAuthenticator>
-        );
-    }
-    
-
-    
+    );
 }
 export default App;

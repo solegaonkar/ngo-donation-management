@@ -18,7 +18,7 @@
       "function": {
         "ngodonormanagement18666908": {
           "deploymentBucketName": "amplify-ngodonormanagement-dev-142722-deployment",
-          "s3Key": "amplify-builds/ngodonormanagement18666908-434d65586961366c5050-build.zip"
+          "s3Key": "amplify-builds/ngodonormanagement18666908-68556d3366444d4e2b31-build.zip"
         }
       }
     }

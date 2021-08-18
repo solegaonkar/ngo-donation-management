@@ -7,14 +7,17 @@ const ORG = "vsm";
 const cache = {};
 
 function search(list, setSuggestions) {
-    if (list.length == 0)
+    if (list.length === 0) {
+        setSuggestions([]);
         return;
+    }
     var promiseList = [];
     var idMap = {};
 
     list.forEach(s => {
+        s = s.toLowerCase().replace(/[^0-9a-z]/g, "");
         idMap[s] = [];
-        var url = `${API}/donor/${ORG}/index/${s.toLowerCase()}`;
+        var url = `${API}/donor/${ORG}/index/${s}`;
         if (cache[url]) {
             idMap[s] = cache[url];
         }
@@ -43,12 +46,13 @@ function search(list, setSuggestions) {
                     return match;
                 });
             }
+            console.log(idList);
             setSuggestions(idList);
         });
 
 }
 
-function DonorSuggestion({ donor }) {
+function DonorSuggestion({ donor, onClick }) {
     const [info, setInfo] = React.useState({});
     React.useEffect(() => {
         // Get details for the donor
@@ -65,9 +69,40 @@ function DonorSuggestion({ donor }) {
         }
     });
 
-    return <div>{info.name} / {info.address}</div>;
+    if (info.fullName) {
+        return (
+            <div className="row pr-4 pl-4">
+                <div className="card pr-4 pl-4">
+                    <div className="card-header card-header-info card-header-text">
+                        <div className="card-text">
+                            <h4 className="card-title">{info.fullName.split(" ")[0]}</h4>
+                        </div>
+                    </div>
+                    <div className="card-body simple-border">
+                        <div className="row">
+                            <div className="col-md-6"><h5>Name:</h5>{info.fullName}</div>
+                            <div className="col-sm-8 col-md-4"><h5>Email:</h5>{info.email}</div>
+                            <div className="col-sm-4 col-md-2"><h5>Phone:</h5>{info.phone}</div>
+                        </div>
+                        <div className="row">
+                            <div className="col-12"><h5>Address:</h5>{info.address}</div>
+                        </div>
+                    </div>
+                    <div className="card-footer ml-auto mr-auto">
+                        <div className="row">
+                            <div className="col-12 right">
+                                <button type="button" className="btn btn-danger btn-sm m-1" onClick={() => {onClick({showNow: "Add Donation"})}}>Add Donation</button>
+                                <button type="button" className="btn btn-danger btn-sm m-1" onClick={() => {onClick({showNow: "Update Donor", parameter: donor})}}>Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    } else {
+        return <div></div>;
+    }
 }
-
 
 function SearchField({ setSuggestions }) {
     const handleChange = (e) => {
@@ -75,16 +110,14 @@ function SearchField({ setSuggestions }) {
         var list = s.split(" ");
         list.pop();
         console.log("Invoking Search: " + list);
-        setSuggestions([]);
         search(list, setSuggestions);
     };
     return (
         <input className="form-control" type="text" name="required" required="true"  onChange={handleChange}  />
     );
-
 }
 
-function DonorSearch() {
+function DonorSearch({onClick}) {
     const [suggestions, setSuggestions] = React.useState([
         "hello"
     ]);
@@ -98,19 +131,23 @@ function DonorSearch() {
                             <div className="col-12 p4-4 pb-4 mt-4 mb-4">
                                 <h1>Donor Search</h1>
                             </div>
+                            <div className="col-12 center">
+                                <button class="btn btn-sm btn-danger" onClick={() => {onClick({showNow: "Create Donor"})}}>Create Donor</button>
+                                <h4>
+                                    Search for the donor using name, phone number, email or pan - or any combination of these, separated by space.
+                                </h4>
+                                <hr/>
+                            </div>
                         </div>
                         <div className="row">
-                            <div className="card ">
-                                <div className="card-header card-header-info card-header-text">
+                            <div className="card border border-danger">
+                                <div className="card-header card-header-danger card-header-text">
                                     <div className="card-text">
                                         <h4 className="card-title">Search</h4>
                                     </div>
                                 </div>
                                 <div className="card-body">
                                     <div className="row">
-                                        <div className="col-12">
-                                            Search for the donor using any of - name, phone number, email or pan. Or a combination of these, separated by space.
-                                        </div>
                                         <div className="col-12">
                                             <SearchField setSuggestions={setSuggestions} />
                                         </div>
@@ -124,9 +161,8 @@ function DonorSearch() {
                             <div className="col-12 p4-4 pb-4 mt-4 mb-4">
                                 {
                                     suggestions.map((donor, index) => {
-                                        return (<DonorSuggestion donor={donor} />)
+                                        return (<DonorSuggestion donor={donor} onClick={onClick} />)
                                     })
-                                    
                                 }
                             </div>
                         </div>

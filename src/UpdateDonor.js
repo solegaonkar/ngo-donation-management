@@ -3,15 +3,22 @@ import React from 'react';
 
 import EditDonor from './EditDonor';
 
-function CreateDonor() {
+import {API} from 'aws-amplify';
 
+function UpdateDonor({id}) {
+    console.log(id);
+    
     const [data, setData] = React.useState({});
-    // handler recieves the `e` event object
-    const createDonor = () => {
-      
-    }
 
-
+    const loadDonor = async () => {
+      await API.post("ngodonation", "/", {
+        body: {id},
+        headers: {}
+      });
+    };
+    
+    loadDonor();
+    
     return (
       <div className="container clear-top">
         <div className="row">
@@ -19,15 +26,14 @@ function CreateDonor() {
             <div className="App container p-4">
               <div className="row">
                 <div className="col-12 p4-4 pb-4 mt-4 mb-4">
-                  <h1>Create Donor</h1>
+                  <h1>Update Donor</h1>
                 </div>
               </div>
-              <EditDonor data={data} setData={(d) => {setData(d)}} submit={createDonor}/>
-
+              <EditDonor data={data} setData={(d) => {setData(d)}} submit={() => {console.log("Submit")}}/>
             </div>
           </div>
         </div>
       </div>
     );
 }
-export default CreateDonor;
+export default UpdateDonor;

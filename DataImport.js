@@ -123,7 +123,7 @@ const searchByIndexList = async(list) => {
  * Build promise list of all searches. Then update the data.
  * */
 const getSourceId = async(source) => {
-    source = source.toLowerCase().replace(/[^a-z0-9\@]/, "");
+    source = source.toLowerCase().replace(/[^a-z0-9\s]/, "");
     var idList = await searchByIndexList(source.split(" "));
     return getBestMatch(idList, 2);
 };
@@ -338,6 +338,7 @@ const extractDonation = (x) => {
     j["id"] = x["tdate"].replace(/\-/g, "") + " " + nanoid();
     j["mode"] = x["modeofpay"];
     j["amount"] = parseInt(x["amount"]);
+    j["time"] = Date.parse(x["tdate"]);
     j["receipt"] = x["receipt"];
     j["notes"] = `${x["reference"]} ${x["kname"]} ${x["reason"]} ${x["otherreason"]} ${x["remarks"]}`;
     j["notes"] = j["notes"].replace(/\s+/g, " ");
@@ -378,14 +379,29 @@ const updateDonor = async(d) => {
                 context: VSM_DONOR_CONTEXT,
                 id: d.donor
             },
-            UpdateExpression: "set donation.amount = donation.amount + :a, donation.ids = list_append(donation.ids, :id)",
+            UpdateExpression: "set donation.amount = donation.amount + :a, donation.ids = list_append(donation.ids, :id), donation.last = :time",
             ExpressionAttributeValues: {
                 ":a": d.amount,
-                ":id": [d.id]
+                ":id": [d.id],
+                ":time": d.time
             },
             ReturnValues: "ALL_NEW"
         }).promise();
         var source = response.Attributes.source;
+        if (!response.Attributes.donation.first) {
+            await ddb.update({
+                TableName: TABLE,
+                Key: {
+                    context: VSM_DONOR_CONTEXT,
+                    id: d.donor
+                },
+                UpdateExpression: "set donation.first = :time",
+                ExpressionAttributeValues: {
+                    ":time": d.time
+                },
+                ReturnValues: "ALL_NEW"
+            }).promise();
+        }
         await updateInfluencer(source, d.amount);
     }
     else {
