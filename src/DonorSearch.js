@@ -49,7 +49,6 @@ function search(list, setSuggestions) {
             console.log(idList);
             setSuggestions(idList);
         });
-
 }
 
 function DonorSuggestion({ donor, onClick }) {
