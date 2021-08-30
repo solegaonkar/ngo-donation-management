@@ -18,6 +18,11 @@ a {
     padding-top: 5rem;
 }
 
+.text {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: normal;
+    font-size: 1em;
+}
 div {
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
@@ -33,7 +38,7 @@ h5 {
     border-width: 1px;
     border-style: solid;
     border-color: #ddd;
-    shadow: 
+
 }
 
 .link-button {

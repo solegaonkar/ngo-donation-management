@@ -39,16 +39,15 @@ const processEdgeDonor = async(id) => {
     var donor = response.Item;
     if (donor) {
         // Check last activity - 
-        var lastDonation = donor.influence.lastDonation;
-        if (donor.donation.lastDonation > lastDonation) {
-            lastDonation = donor.donation.lastDonation;
+        var lastDonationDate = donor.influence.lastDonationDate;
+        if (donor.donation.lastDonationDate > lastDonationDate) {
+            lastDonationDate = donor.donation.lastDonationDate;
         }
-        if (NOW - lastDonation > ARCHIVE_THRESHOLD) {
+        if (NOW - lastDonationDate > ARCHIVE_THRESHOLD) {
             // Remove from the edge list and forget about it.
             donor.edge = donor.edge.filter(a => a!=id);
         }
     }
-
 };
 
 const processActiveDonor = async(id) => {
@@ -60,11 +59,11 @@ const processActiveDonor = async(id) => {
     var donor = response.Item;
     if (donor) {
         // Check last activity - 
-        var lastDonation = donor.influence.lastDonation;
-        if (donor.donation.lastDonation > lastDonation) {
-            lastDonation = donor.donation.lastDonation;
+        var lastDonationDate = donor.influence.lastDonationDate;
+        if (donor.donation.lastDonationDate > lastDonationDate) {
+            lastDonationDate = donor.donation.lastDonationDate;
         }
-        if (NOW - lastDonation > ARCHIVE_THRESHOLD) {
+        if (NOW - lastDonationDate > ARCHIVE_THRESHOLD) {
             // Remove from the edge list and forget about it.
             donor.edge = donor.edge.filter(a => a!=id);
         }

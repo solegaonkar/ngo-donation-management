@@ -6,8 +6,11 @@
             "privacy": {
                 "private": true,
                 "auth": [
+                    "/POST",
+                    "/GET",
                     "/PUT",
-                    "/PATCH"
+                    "/PATCH",
+                    "/DELETE"
                 ]
             },
             "policyResourceName": "/"
@@ -36,5 +39,5 @@
             ]
         }
     ],
-    "uuid": "794f6696"
+    "uuid": "fad1c4c7"
 }
