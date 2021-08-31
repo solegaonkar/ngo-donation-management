@@ -1,6 +1,8 @@
 import './App.css';
 import React from 'react';
 
+// Same code for create and update. If the data has an id, then it is update.
+// In that case mark some fields as readonly.
 function EditDonor({ data, setData, submit }) {
 
     // handler recieves the `e` event object
@@ -12,31 +14,37 @@ function EditDonor({ data, setData, submit }) {
     // {,"notes":"From my friend","source":"","donation":{"amount":8600,"firstDonationDate":1463443200000,"ids":["20160517 QeFhIh5g3ozBTD3H67HVZ","20160122 U_NOXNIFM2qazSjMEKaHw","20200622 A6d4vDE9GbvBByF0-yrgN"],"lastDonationDate":1592784000000},"id":"8-TIB-ozDyHc1TtiQSc5D"}
     const getUpdater = (field, type) => {
         return (e) => {
-            if (field in ["fullName", "birthday", "pan", "isVolunteer", "isCompany", "isVip", "profession"]) {
-                data.info[field] = (type === "checkbox") ? e.target.checked : e.target.value;
+            var d = JSON.parse(JSON.stringify(data));
+            if (["fullName", "birthday", "pan", "isVolunteer", "isCompany", "isVip", "profession"].includes(field)) {
+                d.info[field] = (type === "checkbox") ? e.target.checked : e.target.value;
             }
-            else if (field in ["address"]) {
-                data.contact[field] = e.target.value;
+            else if (["address"].includes(field)) {
+                d.contact[field] = e.target.value;
             }
-            else if (field in ["pin"]) {
-                data.contact[field] = e.target.value;
+            else if (["pin"].includes(field)) {
+                d.contact[field] = e.target.value;
                 loadPinInfo(e.target.value);
             }
-            else if (field in ["email", "phone"]) {
-                if (!data.contact[field]) {
-                    data.contact[field][0] = "";
+            else if (["email", "phone"].includes(field)) {
+                if (!data.contact[field] || !d.contact[field][0]) {
+                    d.contact[field][0] = e.target.void;
+                } else {
+                    d.contact[field][type] = e.target.value;
                 }
-                data.contact[field][type] = e.target.value;
             }
-            setData(data);
+            else if (["referral", "drive"].includes(field)) {
+                d.origin[field] = e.target.value;
+            } else {
+                d[field] = e.target.value;
+            }
+            setData(d);
         };
     };
 
     const [pinDetails, setPinDetails] = React.useState({});
     const loadPinInfo = (pin) => {
-        console.log(`https://api.krazyminds.com/postalpincode/india/${pin}`);
-        if (pin)
-            fetch(`https://api.krazyminds.com/postalpincode/india/${pin}`).then(r => r.json()).then(r => { 
+        if (pin && pin.length==6)
+            fetch(`https://api.krazyminds.com/postalpincode/india/${pin}`).then(r => r.json()).then(r => {
                 console.log(r);
                 setPinDetails(r);
             });
@@ -61,25 +69,25 @@ function EditDonor({ data, setData, submit }) {
                   <label className="col-sm-3 col-lg-1 col-form-label">First Name</label>
                   <div className="col-sm-9 col-lg-5">
                     <div className="form-group">
-                      <input className="form-control" type="text" name="required" required="true" value={data?.info?.fullName} onChange={getUpdater("fullName")}/>
+                        <InputField field={data?.info?.fullName} updater={getUpdater("fullName")}  />
                     </div>
                   </div>
                   <label className="col-sm-3 col-lg-1 col-form-label" >PAN</label>
                   <div className="col-sm-3 col-lg-2">
                     <div className="form-group">
-                      <input className="form-control" type="text" name="pan" required="true" value={data?.info?.pan} onChange={getUpdater("pan")}/>
+                        <InputField field={data?.info?.pan} updater={getUpdater("pan")}  />
                     </div>
                   </div>
                   <label className="col-sm-3 col-lg-1 col-form-label right">Birthday</label>
                   <div className="col-sm-3 col-lg-2">
-                    <div className="form-group">
-                      <input className="form-control" type="text" name="birthday" required="true" value={data?.info?.birthday} onChange={getUpdater("birthday")}/>
+                    <div className="form-group"> 
+                        <InputField field={data?.info?.birthday} type="date" updater={getUpdater("birthday")}  />
                     </div>
                   </div>
                   <label className="col-sm-3 col-lg-1 col-form-label">Profession</label>
                   <div className="col-sm-9 col-lg-5">
                     <div className="form-group">
-                      <input className="form-control" type="text" name="profession" required="true" value={data?.info?.profession} onChange={getUpdater("profession")}/>
+                        <InputField field={data?.info?.profession} type="date" updater={getUpdater("profession")}  />
                     </div>
                   </div>
                   <div className="col-sm-4 col-lg-3 p-4 center">
@@ -154,7 +162,7 @@ function EditDonor({ data, setData, submit }) {
                   <label className="col-sm-2 col-lg-1 col-form-label">Pin</label>
                   <div className="col-sm-4 col-lg-3">
                     <div className="form-group">
-                      <input className="form-control" type="text" required="true" value={data?.contact?.pin} onChange={getUpdater("pin")}/>
+                        <InputField field={data?.contact?.pin} type="date" updater={getUpdater("pin")}  />
                     </div>
                   </div>
                   <div className="col-sm-6 col-lg-8">
@@ -165,7 +173,7 @@ function EditDonor({ data, setData, submit }) {
                   <label className="col-sm-2 col-lg-1 col-form-label">Address</label>
                   <div className="col-sm-10 col-lg-11">
                     <div className="form-group">
-                      <input className="form-control" type="text" required="true" value={data?.contact?.address} onChange={getUpdater("address")}/>
+                        <InputField field={data?.contact?.address} type="date" updater={getUpdater("address")}  />
                     </div>
                   </div>
                   <div className="col-12 text right">
@@ -188,28 +196,28 @@ function EditDonor({ data, setData, submit }) {
               </div>
               <div className="card-body ">
                 <div className="row">
-                  <label className="col-sm-2 col-lg-1 col-form-label">Source</label>
+                  <label className="col-sm-2 col-lg-1 col-form-label">Referral</label>
                   <div className="col-sm-4 col-lg-3">
                     <div className="form-group">
-                      <input className="form-control" type="text" required="true" value={data?.source?.referral}/>
+                        <InputField field={data?.origin?.referral} updater={getUpdater("referral")} readonly={data.id} />
                     </div>
                   </div>
                   <label className="col-sm-2 col-lg-1 col-form-label">Drive</label>
                   <div className="col-sm-4 col-lg-3">
                     <div className="form-group">
-                      <input className="form-control" type="text" required="true" value={data?.source?.drive}/>
+                        <InputField field={data?.origin?.drive} updater={getUpdater("drive")} readonly={data.id} />
                     </div>
                   </div>
                   <label className="col-sm-2 col-lg-1 col-form-label">Month</label>
                   <div className="col-sm-4 col-lg-3">
                     <div className="form-group">
-                      <input className="form-control" type="text" required="true" value={data?.source?.month}/>
+                        <InputField field={data?.origin?.month} updater={getUpdater("month")} readonly={true} />
                     </div>
                   </div>
                   <label className="col-sm-2 col-lg-1 col-form-label">Notes</label>
                   <div className="col-sm-10 col-lg-11">
                     <div className="form-group">
-                      <input className="form-control" type="text" value={data?.notes}/>
+                        <InputField field={data?.notes} updater={getUpdater("notes")} />
                     </div>
                   </div>
                 </div>
@@ -222,4 +230,18 @@ function EditDonor({ data, setData, submit }) {
         </form>
     );
 }
+
+function InputField({ field, type, updater, readonly }) {
+    type = !type ? "text" : type;
+    if (readonly) {
+        return (
+            <input className="form-control" type="{type}" required="true" readonly="true" value={field} onChange={updater}/>
+        );
+    } else {
+        return (
+            <input className="form-control" type="{type}" required="true" value={field} onChange={updater}/>
+        );
+    }
+}
+
 export default EditDonor;

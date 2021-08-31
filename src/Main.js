@@ -20,7 +20,7 @@ function Main() {
         else if (showNow === "Update Donor")
             setMainWidget(<UpdateDonor id={parameter} />);
         else if (showNow === "Create Donor")
-            setMainWidget(<CreateDonor />);
+            setMainWidget(<CreateDonor onSubmit={onClick} />);
         else if (showNow === "Add Donation")
             setMainWidget(<DonorSearch />);
         else 

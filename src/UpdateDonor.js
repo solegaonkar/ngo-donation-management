@@ -9,26 +9,31 @@ import { AmplifyAuthenticator, } from '@aws-amplify/ui-react';
 const ngo = "vsm";
 
 function UpdateDonor({ id }) {
-  console.log(id);
-
   const [data, setData] = React.useState({});
 
   const loadDonor = () => {
-      API.post("ngodonation", "/", {
-          body: { action: "GetDonorInfo", data: { ngo, id } },
-          headers: { 'Content-Type': 'application/json' }
-        }).then(d => {
-          setData(d);
-        })
-        .catch(e => { console.log(JSON.stringify(e)) });
+    API.post("ngodonation", "/", {
+        body: { action: "GetDonorInfo", data: { ngo, id } },
+        headers: { 'Content-Type': 'application/json' }
+      }).then(d => {
+        setData(d);
+      })
+      .catch(e => { console.log(JSON.stringify(e)) });
   };
-  
+
   React.useEffect(() => {
     loadDonor();
   }, []); // <-- Have to pass in [] here!
 
   const submit = () => {
     console.log(JSON.stringify(data));
+
+    API.post("ngodonation", "/", {
+      body: { action: "UpdateDonorInfo", data: { ngo, donor: data } },
+      headers: { 'Content-Type': 'application/json' }
+    }).then(r => {
+      console.log(JSON.stringify(r));
+    }).catch(e => { console.log(JSON.stringify(e)) });
   };
 
   if (data?.id) {
@@ -51,9 +56,10 @@ function UpdateDonor({ id }) {
         </div>
       </AmplifyAuthenticator>
     );
-  } else {
-  return (
-    <AmplifyAuthenticator>
+  }
+  else {
+    return (
+      <AmplifyAuthenticator>
       <div className="container clear-top">
         <div className="row">
           <div className="col-12">
@@ -68,7 +74,7 @@ function UpdateDonor({ id }) {
         </div>
       </div>
     </AmplifyAuthenticator>
-  );
+    );
 
   }
 
