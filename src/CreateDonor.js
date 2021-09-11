@@ -20,6 +20,7 @@ function CreateDonor({onSubmit}) {
         donor.context = `${ngo} donor`;
         donor.id = nanoid();
 
+        
         API.post("ngodonation", "/", {
             body: { action: "CreateNewDonor", data: { ngo, donor } },
             headers: { 'Content-Type': 'application/json' }

@@ -18,11 +18,15 @@
       "function": {
         "ngodonormanagement18666908": {
           "deploymentBucketName": "amplify-ngodonormanagement-dev-142722-deployment",
-          "s3Key": "amplify-builds/ngodonormanagement18666908-633861304e6162524d74-build.zip"
+          "s3Key": "amplify-builds/ngodonormanagement18666908-6947356e38715a584469-build.zip"
         },
         "ngodonationanalysis": {
           "deploymentBucketName": "amplify-ngodonormanagement-dev-142722-deployment",
           "s3Key": "amplify-builds/ngodonationanalysis-555953337641387a7841-build.zip"
+        },
+        "NgoDonationManagementTrigger7767259e": {
+          "deploymentBucketName": "amplify-ngodonormanagement-dev-142722-deployment",
+          "s3Key": "amplify-builds/NgoDonationManagementTrigger7767259e-6f5039396143412b6845-build.zip"
         }
       }
     }

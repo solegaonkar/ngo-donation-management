@@ -3,6 +3,7 @@ import React from 'react';
 import SideBar from './SideBar';
 import Dashboard from './Dashboard';
 import CreateDonor from './CreateDonor';
+import CreateDonation from './CreateDonation';
 import UpdateDonor from './UpdateDonor';
 import DonorSearch from './DonorSearch';
 import { Auth } from 'aws-amplify';
@@ -14,15 +15,15 @@ function Main() {
     ]);
 
     const onClick = ({showNow, parameter}) => {
-        console.log(showNow);
+        console.log(showNow, parameter);
         if (showNow === "Donor Search")
             setMainWidget(<DonorSearch onClick={onClick}/>);
         else if (showNow === "Update Donor")
-            setMainWidget(<UpdateDonor id={parameter} />);
+            setMainWidget(<UpdateDonor onSubmit={onClick} id={parameter} />);
         else if (showNow === "Create Donor")
             setMainWidget(<CreateDonor onSubmit={onClick} />);
         else if (showNow === "Add Donation")
-            setMainWidget(<DonorSearch />);
+            setMainWidget(<CreateDonation onSubmit={onClick} id={parameter} />);
         else 
             setMainWidget(<Dashboard />);
     }

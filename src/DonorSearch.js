@@ -1,10 +1,9 @@
 import './App.css';
 import React from 'react';
-import axios from 'axios';
+import Cloud from './Cloud';
+
 const API = "https://gzxq65j3m2.execute-api.us-east-1.amazonaws.com/v1";
 const ORG = "vsm";
-
-const cache = {};
 
 function search(list, setSuggestions) {
     if (list.length === 0) {
@@ -18,19 +17,10 @@ function search(list, setSuggestions) {
         s = s.toLowerCase().replace(/[^0-9a-z]/g, "");
         idMap[s] = [];
         var url = `${API}/donor/${ORG}/index/${s}`;
-        if (cache[url]) {
-            idMap[s] = cache[url];
-        }
-        else {
-            console.log(url);
-            var p = axios.get(url)
-                .then(response => {
-                    console.log("Caching: " + url);
-                    cache[url] = response.data;
-                    idMap[s] = response.data;
-                });
-            promiseList.push(p);
-        }
+        var p = Cloud.fetch(url).then(d => {
+            idMap[s] = d;
+        });
+        promiseList.push(p);
     });
     Promise.all(promiseList)
         .then(x => {
@@ -56,16 +46,7 @@ function DonorSuggestion({ donor, onClick }) {
     React.useEffect(() => {
         // Get details for the donor
         var url = `${API}/donor/${ORG}/basic/${donor}`;
-        if (cache[url]) {
-            setInfo(cache[url]);
-        }
-        else {
-            console.log(url);
-            axios.get(url).then(r => {
-                cache[url] = r.data;
-                setInfo(r.data);
-            });
-        }
+        Cloud.fetch(url).then(d => setInfo(d));
     });
 
     if (info.fullName) {
@@ -90,7 +71,7 @@ function DonorSuggestion({ donor, onClick }) {
                     <div className="card-footer ml-auto mr-auto">
                         <div className="row">
                             <div className="col-12 right">
-                                <button type="button" className="btn btn-danger btn-sm m-1" onClick={() => {onClick({showNow: "Add Donation"})}}>Add Donation</button>
+                                <button type="button" className="btn btn-danger btn-sm m-1" onClick={() => {onClick({showNow: "Add Donation", parameter: donor})}}>Add Donation</button>
                                 <button type="button" className="btn btn-danger btn-sm m-1" onClick={() => {onClick({showNow: "Update Donor", parameter: donor})}}>Update</button>
                             </div>
                         </div>
@@ -98,7 +79,8 @@ function DonorSuggestion({ donor, onClick }) {
                 </div>
             </div>
         );
-    } else {
+    }
+    else {
         return <div></div>;
     }
 }
@@ -116,7 +98,7 @@ function SearchField({ setSuggestions }) {
     );
 }
 
-function DonorSearch({onClick}) {
+function DonorSearch({ onClick }) {
     const [suggestions, setSuggestions] = React.useState([
         "hello"
     ]);

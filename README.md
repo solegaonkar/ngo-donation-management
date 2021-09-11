@@ -2,6 +2,17 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Roadmap
+- CRUD flow for Donor
+- Create flow for Donation
+- Publish Creates to eventbridge, capture in the processing function
+- Donor processing - identify origin, update 1 statistics measure
+- UI for Statistics
+- Enumerate statistics required
+- Donor processing - identify origin, add all statistics with UI
+- Donation processing - identify origin, add all statistics with UI
+
+
 ## Available Scripts
 
 In the project directory, you can run:
